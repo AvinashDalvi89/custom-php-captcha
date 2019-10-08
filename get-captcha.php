@@ -10,7 +10,7 @@ ini_set('display_errors', 'On');
  * @copyright  2019 aviboy2006   
  */
 session_start();
-include("captcha-engine.php");
+include("includes/captcha-engine.php");
 
 $captchaObj = new captchaClass();
 $captchaObj->create('#162453','#fff',120,40,10,25);
