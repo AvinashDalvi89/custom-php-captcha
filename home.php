@@ -10,11 +10,13 @@
  */
 session_start();
 $msg = 0;
-if (isset($_POST['Submit'])) {
-    // code for check server side validation
+
+if (isset($_POST['Submit'])) { 
+ 
     if (empty($_SESSION['captcha_code']) || strcasecmp($_SESSION['captcha_code'], $_POST['captcha_code']) != 0) {
+
         $msg = 1;
-    } else { // Captcha verification is Correct. Final Code Execute here!
+    } else {  
         $msg = 2;
     }
 }
@@ -22,8 +24,7 @@ if (isset($_POST['Submit'])) {
 <!DOCTYPE html>
 <html>
  <head>
-   <title> Custom Captcha Code Test ! </title>
-   <!-- Latest compiled and minified CSS -->
+   <title> Custom Captcha Code Test ! </title> 
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> 
    <script type='text/javascript'>
       function refreshCaptcha(){
@@ -47,11 +48,12 @@ if (isset($_POST['Submit'])) {
              <?php
                 if ($msg == 1) {
                 ?>
-             <div class="alert alert-success" role="alert">The Validation code has been matched. </div>
+              <div class="alert alert-danger" role="alert">The Validation code does not match!</div>
              <?php
                 } else if ($msg == 2) {
                 ?>
-             <div class="alert alert-danger" role="alert">The Validation code does not match!</div>
+                 <div class="alert alert-success" role="alert">The Validation code has been matched. </div>
+           
              <?php
                 }
                 ?> 
@@ -63,12 +65,13 @@ if (isset($_POST['Submit'])) {
              <div class="form-group">
                 <label for="pwd">You can enter code here:</label>
                 <input id="captcha_code" name="captcha_code" type="text" class="form-control">
+
              </div>
              <div class="form-group">
                <small class="form-text text-muted">
                Not able to read image ? click <a onClick="refreshCaptcha();">here</a> to get new one. </small>
              </div>
-             <button type="submit" class="btn btn-primary">Submit</button>
+             <input name="Submit" type="submit" onclick="return validate();" value="Submit" class="btn btn-primary" > 
           </form>
         </div>
       </div>

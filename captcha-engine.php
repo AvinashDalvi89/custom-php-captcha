@@ -12,42 +12,39 @@ ini_set('display_errors', 'On');
 class captchaClass
 {
     public function create($textColor, $backgroundColor, $imgWidth, $imgHeight, $noiceLines = 0, $noiceDots = 0, $noiceColor = '#162453')
-    {
-        /* Settings */
+    { 
         $text      = $this->getRandom();
-        $font      = './font/monofont.ttf';
-        /* font */
+        $font      = './font/monofont.ttf'; 
         $textColor = $this->hexToRGB($textColor);
         $fontSize  = $imgHeight * 0.75;
         
-        $im        = imagecreatetruecolor($imgWidth, $imgHeight);
-        $textColor = imagecolorallocate($im, $textColor['r'], $textColor['g'], $textColor['b']);
+        $custom_image = imagecreatetruecolor($imgWidth, $imgHeight);
+        $textColor = imagecolorallocate($custom_image, $textColor['r'], $textColor['g'], $textColor['b']);
         
         $backgroundColor = $this->hexToRGB($backgroundColor);
-        $backgroundColor = imagecolorallocate($im, $backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b']);
-        
-        /* generating lines randomly in background of image */
+        $backgroundColor = imagecolorallocate($custom_image, $backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b']);
+         
         if ($noiceLines > 0) {
             $noiceColor = $this->hexToRGB($noiceColor);
-            $noiceColor = imagecolorallocate($im, $noiceColor['r'], $noiceColor['g'], $noiceColor['b']);
+            $noiceColor = imagecolorallocate($custom_image, $noiceColor['r'], $noiceColor['g'], $noiceColor['b']);
             for ($i = 0; $i < $noiceLines; $i++) {
-                imageline($im, mt_rand(0, $imgWidth), mt_rand(0, $imgHeight), mt_rand(0, $imgWidth), mt_rand(0, $imgHeight), $noiceColor);
+                imageline($custom_image, mt_rand(0, $imgWidth), mt_rand(0, $imgHeight), mt_rand(0, $imgWidth), mt_rand(0, $imgHeight), $noiceColor);
             }
         }
         
         if ($noiceDots > 0) { 
             for ($i = 0; $i < $noiceDots; $i++) {
-                imagefilledellipse($im, mt_rand(0, $imgWidth), mt_rand(0, $imgHeight), 3, 3, $textColor);
+                imagefilledellipse($custom_image, mt_rand(0, $imgWidth), mt_rand(0, $imgHeight), 3, 3, $textColor);
             }
         }
         
-        imagefill($im, 0, 0, $backgroundColor);
-        list($x, $y) = $this->makeImageCenter($im, $text, $font, $fontSize);
-        imagettftext($im, $fontSize, 0, $x, $y, $textColor, $font, $text);
+        imagefill($custom_image, 0, 0, $backgroundColor);
+        list($x, $y) = $this->makeImageCenter($custom_image, $text, $font, $fontSize);
+        imagettftext($custom_image, $fontSize, 0, $x, $y, $textColor, $font, $text);
         
-        imagejpeg($im, NULL, 90); 
+        imagejpeg($custom_image, NULL, 90); 
         header('Content-Type: image/jpeg'); 
-        imagedestroy($im); 
+        imagedestroy($custom_image); 
         if (isset($_SESSION)) {
             $_SESSION['captcha_code'] = $text; 
         }
