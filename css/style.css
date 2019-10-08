@@ -1,0 +1,16 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FFF;
+	background: #40170842;
+}
+a {
+	-moz-user-select: none;
+	color: #1155CC !important;
+	font-family: "verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-decoration: none;
+}
+.btn{
+	background-color: #607D8B;
+    border-color: #607D8B;
+}
